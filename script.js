@@ -24,6 +24,15 @@ function desligarCamera(numero) {
     }
 }
 
+function expandir(bloco) {
+    bloco.classList.add("expandido");
+}
+
+function voltar(event, botao) {
+    event.stopPropagation();
+    botao.parentElement.classList.remove("expandido");
+}
+
 window.onload = () => {
     ligarCamera(1);
 };
