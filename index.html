@@ -1,101 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Sistema de Webcam</title>
-  <style>
-    body {
-      text-align: center;
-      font-family: Arial;
-      margin-top: 30px;
-    }
-
-    video {
-      width: 640px;
-      border: 2px solid black;
-      border-radius: 10px;
-    }
-
-    button {
-      margin: 10px;
-      padding: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Sistema de Webcam</title>
+    <link rel="stylesheet" href="visual.css">
 </head>
+
 <body>
+<h1>Painel de Monitoramento</h1>
 
-  <h1>Visualização da Webcam</h1>
+<div class="container-cameras">
+    <div class="camera-box">
+        <h3>Câmera 1</h3>
+        <video id="camera1" autoplay></video>
+        <canvas id="canvas1"></canvas>
+    </div>
 
-  <video id="camera" autoplay></video>
-  <canvas id="canvas"></canvas>
+    <div class="camera-box">
+        <h3>Câmera 2</h3>
+        <video id="camera2" autoplay></video>
+        <canvas id="canvas2"></canvas>
+    </div>
 
-  <br>
+    <div class="camera-box">
+        <h3>Câmera 3</h3>
+        <video id="camera3" autoplay></video>
+        <canvas id="canvas3"></canvas>
+    </div>
 
-  <button onclick="ligarCamera()">Ligar câmera</button>
-  <button onclick="desligarCamera()">Desligar câmera</button>
-<script src="https://docs.opencv.org/4.x/opencv.js"></script>
-  <script>
-    let stream;
-    const video = document.getElementById("camera");
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-   
+    <div class="camera-box">
+        <h3>Câmera 4</h3>
+        <video id="camera4" autoplay></video>
+        <canvas id="canvas4"></canvas>
+    </div>
+</div>
 
-    async function ligarCamera() {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: false
-    });
+<br>
 
-    video.srcObject = stream;
-
-    video.onloadedmetadata = () => {
-      video.play();
-
-      if (typeof cv !== "undefined") {
-        processarFrame();
-      } else {
-        alert("OpenCV ainda não carregou.");
-      }
-    };
-
-  } catch (erro) {
-    alert("Erro ao acessar câmera: " + erro);
-    console.error(erro);
-  }
-}
-    function desligarCamera() {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-        video.srcObject = null;
-      }
-    }
-
-    function processarFrame() {
-    if (!stream) return;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    ctx.drawImage(video, 0, 0);
-
-    let src = cv.imread(canvas);
-    let gray = new cv.Mat();
-    let edges = new cv.Mat();
-
-    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
-    cv.Canny(gray, edges, 50, 100);
-
-    cv.imshow("canvas", edges);
-
-    src.delete();
-    gray.delete();
-    edges.delete();
-
-    requestAnimationFrame(processarFrame);
-}
-  </script>
-
+<button onclick="ligarCamera(1)">Ligar câmera 1</button>
+<button onclick="desligarCamera(1)">Desligar câmera 1</button>
+<script src="script.js"></script>
 </body>
 </html>
