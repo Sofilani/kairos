@@ -33,31 +33,68 @@
 
   <button onclick="ligarCamera()">Ligar câmera</button>
   <button onclick="desligarCamera()">Desligar câmera</button>
-
+<script src="https://docs.opencv.org/4.x/opencv.js"></script>
   <script>
     let stream;
     const video = document.getElementById("camera");
-    async src="https://docs.opencv.org/4.x/opencv.js";
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+   
 
     async function ligarCamera() {
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: false
-        });
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false
+    });
 
-        video.srcObject = stream;
-      } catch (erro) {
-        alert("Erro ao acessar câmera: " + erro);
+    video.srcObject = stream;
+
+    video.onloadedmetadata = () => {
+      video.play();
+
+      if (typeof cv !== "undefined") {
+        processarFrame();
+      } else {
+        alert("OpenCV ainda não carregou.");
       }
-    }
+    };
 
+  } catch (erro) {
+    alert("Erro ao acessar câmera: " + erro);
+    console.error(erro);
+  }
+}
     function desligarCamera() {
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
         video.srcObject = null;
       }
     }
+
+    function processarFrame() {
+    if (!stream) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0);
+
+    let src = cv.imread(canvas);
+    let gray = new cv.Mat();
+    let edges = new cv.Mat();
+
+    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+    cv.Canny(gray, edges, 50, 100);
+
+    cv.imshow("canvas", edges);
+
+    src.delete();
+    gray.delete();
+    edges.delete();
+
+    requestAnimationFrame(processarFrame);
+}
   </script>
 
 </body>
