@@ -27,6 +27,7 @@
   <h1>Visualização da Webcam</h1>
 
   <video id="camera" autoplay></video>
+  <canvas id="canvas"></canvas>
 
   <br>
 
@@ -36,6 +37,7 @@
   <script>
     let stream;
     const video = document.getElementById("camera");
+    async src="https://docs.opencv.org/4.x/opencv.js";
 
     async function ligarCamera() {
       try {
