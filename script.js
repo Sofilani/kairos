@@ -1,11 +1,42 @@
 let streams = {};
+let cameras = [];
+
+async function listarCameras() {
+    try {
+        // pede permissão uma vez
+        await navigator.mediaDevices.getUserMedia({ video: true });
+
+        const dispositivos = await navigator.mediaDevices.enumerateDevices();
+
+        cameras = dispositivos.filter(device => device.kind === "videoinput");
+
+        console.log("Câmeras encontradas:", cameras);
+
+        // Liga automaticamente até 4 câmeras
+        for (let i = 0; i < cameras.length && i < 4; i++) {
+            ligarCamera(i + 1);
+        }
+
+    } catch (erro) {
+        alert("Erro ao listar câmeras: " + erro);
+    }
+}
 
 async function ligarCamera(numero) {
     const video = document.getElementById(`camera${numero}`);
 
+    if (!cameras[numero - 1]) {
+        alert(`Câmera ${numero} não encontrada.`);
+        return;
+    }
+
     try {
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
+            video: {
+                deviceId: {
+                    exact: cameras[numero - 1].deviceId
+                }
+            },
             audio: false
         });
 
@@ -13,7 +44,7 @@ async function ligarCamera(numero) {
         video.srcObject = stream;
 
     } catch (erro) {
-        alert("Erro: " + erro);
+        alert("Erro ao ligar câmera " + numero + ": " + erro);
     }
 }
 
@@ -21,6 +52,7 @@ function desligarCamera(numero) {
     if (streams[numero]) {
         streams[numero].getTracks().forEach(track => track.stop());
         document.getElementById(`camera${numero}`).srcObject = null;
+        delete streams[numero];
     }
 }
 
@@ -33,6 +65,4 @@ function voltar(event, botao) {
     botao.parentElement.classList.remove("expandido");
 }
 
-window.onload = () => {
-    ligarCamera(1);
-};
+window.onload = listarCameras;

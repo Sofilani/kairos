@@ -1,66 +1,72 @@
-* {
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    overflow: hidden;
+    background: #111;
 }
 
-.container {
+h1 {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: #222;
+    color: white;
+    margin: 0;
+}
+
+.container-cameras {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr; /* 👈 isso aqui */
-    gap: 20px;
-    padding: 20px;
-    height: 100vh;
+    grid-template-rows: 1fr 1fr;
 }
 
 .bloco {
     position: relative;
-    border: 2px solid #ccc;
-    border-radius: 15px;
     overflow: hidden;
-    cursor: pointer;
-    background: #000;
+    background: black;
+    border: 1px solid #333;
 }
 
 .bloco h2 {
     position: absolute;
     top: 10px;
-    left: 20px;
-    z-index: 2;
+    left: 10px;
     color: white;
-    background: rgba(0,0,0,0.5);
-    padding: 5px 12px;
-    border-radius: 8px;
+    background: rgba(0,0,0,0.6);
+    padding: 5px 10px;
+    z-index: 10;
+    font-size: 14px;
 }
 
 video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
-/* Tela cheia */
 .expandido {
     position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100vw !important;
-    height: 100vh !important;
+    inset: 0;
     z-index: 999;
-    border-radius: 0;
 }
 
 .voltar {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: white;
-    cursor: pointer;
     display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .expandido .voltar {
