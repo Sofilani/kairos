@@ -3,7 +3,6 @@ let cameras = [];
 
 async function listarCameras() {
     try {
-        // pede permissão uma vez
         await navigator.mediaDevices.getUserMedia({ video: true });
 
         const dispositivos = await navigator.mediaDevices.enumerateDevices();
@@ -12,7 +11,6 @@ async function listarCameras() {
 
         console.log("Câmeras encontradas:", cameras);
 
-        // Liga automaticamente até 4 câmeras
         for (let i = 0; i < cameras.length && i < 4; i++) {
             ligarCamera(i + 1);
         }
@@ -64,5 +62,15 @@ function voltar(event, botao) {
     event.stopPropagation();
     botao.parentElement.classList.remove("expandido");
 }
+
+// ← NOVO: fecha com ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const expandido = document.querySelector('.expandido');
+        if (expandido) {
+            expandido.classList.remove('expandido');
+        }
+    }
+});
 
 window.onload = listarCameras;

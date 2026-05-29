@@ -3,82 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Webcam</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #111; }
-
-        h1 {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            background: #222;
-            color: white;
-            z-index: 10;
-            font-size: 18px;
-        }
-
-        .container-cameras {
-            position: fixed;
-            top: 50px; left: 0; right: 0; bottom: 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-        }
-
-        .bloco {
-            position: relative;
-            overflow: hidden;
-            background: #111;
-            border: 1px solid #333;
-            cursor: pointer;
-        }
-
-        .bloco h2 {
-            position: absolute;
-            top: 8px; left: 8px;
-            color: white;
-            background: rgba(0,0,0,0.6);
-            padding: 4px 10px;
-            z-index: 5;
-            font-size: 13px;
-            font-weight: normal;
-            border-radius: 4px;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .expandido {
-            position: fixed !important;
-            top: 0 !important; left: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            z-index: 999;
-        }
-
-        .voltar {
-            display: none;
-            position: absolute;
-            top: 10px; right: 10px;
-            z-index: 1000;
-            padding: 6px 14px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            border: 1px solid #555;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .expandido .voltar { display: block; }
-    </style>
+    <link rel="stylesheet" href="visual.css">
 </head>
 <body>
 
@@ -87,22 +12,22 @@
 <div class="container-cameras">
     <div class="bloco" onclick="expandir(this)">
         <h2>Câmera 1</h2>
-        <button class="voltar" onclick="voltar(event, this)">Voltar</button>
+        <button class="voltar" onclick="voltar(event, this)">⬅ Voltar</button>
         <video id="camera1" autoplay playsinline></video>
     </div>
     <div class="bloco" onclick="expandir(this)">
         <h2>Câmera 2</h2>
-        <button class="voltar" onclick="voltar(event, this)">Voltar</button>
+        <button class="voltar" onclick="voltar(event, this)">⬅ Voltar</button>
         <video id="camera2" autoplay playsinline></video>
     </div>
     <div class="bloco" onclick="expandir(this)">
         <h2>Câmera 3</h2>
-        <button class="voltar" onclick="voltar(event, this)">Voltar</button>
+        <button class="voltar" onclick="voltar(event, this)">⬅ Voltar</button>
         <video id="camera3" autoplay playsinline></video>
     </div>
     <div class="bloco" onclick="expandir(this)">
         <h2>Câmera 4</h2>
-        <button class="voltar" onclick="voltar(event, this)">Voltar</button>
+        <button class="voltar" onclick="voltar(event, this)">⬅ Voltar</button>
         <video id="camera4" autoplay playsinline></video>
     </div>
 </div>
